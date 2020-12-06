@@ -1,6 +1,6 @@
 # intl-message-check
 
-Run `npx intl-message-check` (CLI) in your JS/TS project folder to check if messages are unused or missing.
+Run `npx @kporten/intl-message-check` (CLI) in your JS/TS project folder to check if messages are unused or missing.
 
 Supported format: https://formatjs.io/docs/react-intl/api#formatmessage
 
