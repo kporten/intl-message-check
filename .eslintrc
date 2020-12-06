@@ -1,0 +1,33 @@
+// https://github.com/iamturns/eslint-config-airbnb-typescript
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:promise/recommended",
+    "plugin:unicorn/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint",
+    "prettier/unicorn"
+  ],
+  "rules": {
+    "no-restricted-syntax": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "unicorn/filename-case": "off",
+    "unicorn/prevent-abbreviations": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    }
+  ]
+}
