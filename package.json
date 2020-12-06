@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "license": "MIT",
-  "description": "CLI tool to check for missing intl messages",
+  "description": "CLI tool to check if messages are unused or missing",
   "repository": "https://github.com/kporten/intl-message-check.git",
   "bugs": "https://github.com/kporten/intl-message-check/issues",
   "author": "Kevin Porten <hello@kevinporten.dev>",
