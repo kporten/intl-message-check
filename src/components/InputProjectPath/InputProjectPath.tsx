@@ -3,6 +3,8 @@ import TextInput from 'ink-text-input';
 import path from 'path';
 import { useState } from 'react';
 
+import useAccess from '../hooks/useAccess';
+
 type InputProjectPathProps = {
   step: string;
   submitted?: string;
@@ -15,6 +17,13 @@ const InputProjectPath: React.FC<InputProjectPathProps> = ({
   onSubmit,
 }) => {
   const [projectPath, setProjectPath] = useState('');
+  const hasAccess = useAccess(projectPath, 'DIRECTORY');
+
+  const handleSubmit = (value: string) => {
+    if (value && !hasAccess) return;
+
+    onSubmit?.(path.resolve(value || process.cwd()));
+  };
 
   return (
     <Box flexDirection="column" marginTop={1}>
@@ -32,12 +41,19 @@ const InputProjectPath: React.FC<InputProjectPathProps> = ({
             placeholder={process.cwd()}
             value={projectPath}
             onChange={setProjectPath}
-            onSubmit={(value) =>
-              onSubmit?.(path.resolve(value || process.cwd()))
-            }
+            onSubmit={handleSubmit}
           />
         )}
       </Box>
+      {!!projectPath && (
+        <Box>
+          {hasAccess ? (
+            <Text color="green">✓ Path is valid</Text>
+          ) : (
+            <Text color="red">⨉ Path is not valid</Text>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };

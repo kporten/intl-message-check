@@ -3,6 +3,7 @@ import TextInput from 'ink-text-input';
 import path from 'path';
 import { useState } from 'react';
 
+import useAccess from '../hooks/useAccess';
 import useAutoDetection from './hooks/useAutoDetection';
 
 type InputFilePathProps = {
@@ -18,8 +19,15 @@ const InputFilePath: React.FC<InputFilePathProps> = ({
   submitted,
   onSubmit,
 }) => {
-  const autoDetected = useAutoDetection({ projectPath });
+  const { autoDetected } = useAutoDetection(projectPath);
   const [filePath, setFilePath] = useState('');
+  const hasAccess = useAccess(path.resolve(projectPath, filePath), 'FILE');
+
+  const handleSubmit = (value: string) => {
+    if (value && !hasAccess) return;
+
+    onSubmit?.(path.resolve(projectPath, value || autoDetected));
+  };
 
   return (
     <Box flexDirection="column" marginTop={1}>
@@ -36,15 +44,22 @@ const InputFilePath: React.FC<InputFilePathProps> = ({
           <Text color="blue">{submitted}</Text>
         ) : (
           <TextInput
-            placeholder={autoDetected}
+            placeholder={autoDetected || '?'}
             value={filePath}
             onChange={setFilePath}
-            onSubmit={(value) =>
-              onSubmit?.(path.resolve(projectPath, value || autoDetected))
-            }
+            onSubmit={handleSubmit}
           />
         )}
       </Box>
+      {!!filePath && (
+        <Box>
+          {hasAccess ? (
+            <Text color="green">✓ Path is valid</Text>
+          ) : (
+            <Text color="red">⨉ Path is not valid</Text>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };

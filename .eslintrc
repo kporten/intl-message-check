@@ -16,6 +16,7 @@
     "prettier/unicorn"
   ],
   "rules": {
+    "jsx-a11y/accessible-emoji": "off",
     "no-console": ["error", { "allow": ["clear"] }],
     "no-restricted-syntax": "off",
     "react/prop-types": "off",

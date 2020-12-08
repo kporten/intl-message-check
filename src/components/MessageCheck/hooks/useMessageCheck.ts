@@ -9,7 +9,7 @@ import type { FormReducerState } from '../../App/utils/formReducer';
 import InputModeValue from '../../App/utils/inputModeValue';
 
 const useMessageCheck = (input: Required<FormReducerState>) => {
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [results, setResults] = useState<
     { message: string; link?: string }[]
   >();
