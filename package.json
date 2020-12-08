@@ -7,6 +7,16 @@
   "repository": "https://github.com/kporten/intl-message-check.git",
   "bugs": "https://github.com/kporten/intl-message-check/issues",
   "author": "Kevin Porten <hello@kevinporten.dev>",
+  "keywords": [
+    "intl",
+    "i18n",
+    "internationalization",
+    "format",
+    "formatting",
+    "translate",
+    "translation",
+    "react-intl"
+  ],
   "scripts": {
     "start": "node ./dist/index.js",
     "watch": "rollup -c -w",
