@@ -1,10 +1,12 @@
-# intl-message-check
+![intl-message-check](./assets/logo.png)
 
-Run `npx @kporten/intl-message-check` (CLI) in your JS/TS project folder to check if messages are unused or missing.
+This CLI tool can help you detect missing and unused Format.JS messages (https://formatjs.io/docs/react-intl/api#formatmessage).
 
-Supported format: https://formatjs.io/docs/react-intl/api#formatmessage
+Run `npx @kporten/intl-message-check` in your JS/TS project folder to check your message definitions.
 
-Example JSON file with intl messages:
+## Example
+
+Your JSON file with intl messages:
 
 ```json
 {
@@ -14,11 +16,33 @@ Example JSON file with intl messages:
 }
 ```
 
-Example usage of formatMessage() in your code:
+Usage of formatMessage() in your code:
 
 ```jsx
 <div>{intl.formatMessage({ id: 'menu' })}</div>
 ```
+
+Run this tool to find missing messages:
+
+```sh
+[1/3] What kind of messages do you want to find?
+
+Find missing
+
+[2/3] Please enter the path to your JS/TS project directory:
+
+/path/to/your/project
+✓ Path is valid
+
+[3/3] Please enter the path to your JSON file with message definitions:
+
+/path/to/your/project/src/i18n/en.json
+
+languages.de
+languages.en
+```
+
+Now you know that you should add the two messages.
 
 > Note: Currently only static IDs will be supported.
 
