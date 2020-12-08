@@ -1,14 +1,16 @@
 import { Box, Text } from 'ink';
 import SelectInput from 'ink-select-input';
 
+import InputModeValue from '../App/utils/inputModeValue';
+
 const modes = [
   {
-    label: 'Find unused',
-    value: 'UNUSED',
+    label: 'Find missing',
+    value: InputModeValue.MISSING,
   },
   {
-    label: 'Find missing',
-    value: 'MISSING',
+    label: 'Find unused',
+    value: InputModeValue.UNUSED,
   },
 ];
 

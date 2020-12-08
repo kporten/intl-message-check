@@ -6,6 +6,8 @@ import readline from 'readline';
 
 import type { FormReducerState } from '../../App/utils/formReducer';
 
+import InputModeValue from '../../App/utils/inputModeValue';
+
 const useMessageCheck = (input: Required<FormReducerState>) => {
   const [errorMessage, setErrorMessage] = useState();
   const [results, setResults] = useState<
@@ -15,14 +17,23 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
   useEffect(() => {
     const search = async () => {
       try {
+        // * Resolve paths
         const cwd = path.resolve(input.projectPath);
         const intlFile = await import(path.resolve(input.filePath));
 
+        // * Source intl messages
         const intlMessages = new Map<
           string,
           { file: string; line: number; isMissing: boolean } | undefined
         >(Object.keys(intlFile.default).map((key) => [key, undefined]));
 
+        // * Get all JS/TS files of the project
+        const projectFilePaths = await globby('**/*.(j|t)s?(x)', {
+          gitignore: true,
+          cwd,
+        });
+
+        // * Function to check the file content for intl ids
         const checkFile = (relativeFilePath: string) =>
           new Promise((resolve, reject) => {
             const filePath = path.join(cwd, relativeFilePath);
@@ -38,6 +49,7 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
               const id = line.match(/id:.?["'](.*)["']/);
               const message = id?.[1];
 
+              // * Check if intl message id is not falsy and save the result of the check for this message id
               if (message) {
                 intlMessages.set(message, {
                   file: filePath,
@@ -50,39 +62,37 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
             readInterface.on('close', resolve);
           });
 
-        const projectFilePaths = await globby('**/*.(j|t)s?(x)', {
-          gitignore: true,
-          cwd,
-        });
-
+        // * Process each file
         await Promise.allSettled(
           projectFilePaths.map((projectFilePath) => checkFile(projectFilePath)),
         );
 
+        // * Prepare results for output
         const data = [];
 
-        if (input.mode.value === 'MISSING') {
-          for (const entry of intlMessages.entries()) {
-            if (entry[1]?.isMissing) {
-              data.push({
-                message: entry[0],
-                link: `${entry[1]?.file}:${entry[1]?.line}`,
-              });
-            }
+        for (const [message, result] of intlMessages.entries()) {
+          switch (input.mode.value) {
+            case InputModeValue.MISSING:
+              if (result && result.isMissing) {
+                data.push({
+                  message,
+                  link: `${result.file}:${result.line}`,
+                });
+              }
+              break;
+            case InputModeValue.UNUSED:
+              if (!result) {
+                data.push({
+                  message,
+                });
+              }
+              break;
+            default:
+              throw new Error('input mode value not supported');
           }
-
-          setResults(data);
-        } else if (input.mode.value === 'UNUSED') {
-          for (const entry of intlMessages.entries()) {
-            if (!entry[1]) {
-              data.push({
-                message: entry[0],
-              });
-            }
-          }
-
-          setResults(data);
         }
+
+        setResults(data);
       } catch (error) {
         setErrorMessage(error.message);
       }
