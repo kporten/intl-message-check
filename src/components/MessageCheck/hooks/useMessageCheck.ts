@@ -17,11 +17,10 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
   useEffect(() => {
     const search = async () => {
       try {
-        // * Resolve paths
-        const cwd = path.resolve(input.projectPath);
-        const intlFile = await import(path.resolve(input.filePath));
+        // * Import JSON file
+        const intlFile = await import(input.filePath);
 
-        // * Source intl messages
+        // * Prepare intl messages from JSON file
         const intlMessages = new Map<
           string,
           { file: string; line: number; isMissing: boolean } | undefined
@@ -30,13 +29,13 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
         // * Get all JS/TS files of the project
         const projectFilePaths = await globby('**/*.(j|t)s?(x)', {
           gitignore: true,
-          cwd,
+          cwd: input.projectPath,
         });
 
-        // * Function to check the file content for intl ids
+        // * Function to check the file content for intl message ids
         const checkFile = (relativeFilePath: string) =>
           new Promise((resolve, reject) => {
-            const filePath = path.join(cwd, relativeFilePath);
+            const filePath = path.join(input.projectPath, relativeFilePath);
             const readInterface = readline.createInterface({
               input: fs.createReadStream(filePath).on('error', reject),
             });

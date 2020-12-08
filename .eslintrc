@@ -16,6 +16,7 @@
     "prettier/unicorn"
   ],
   "rules": {
+    "no-console": ["error", { "allow": ["clear"] }],
     "no-restricted-syntax": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",

@@ -1,6 +1,6 @@
 import { Box, Text } from 'ink';
 import TextInput from 'ink-text-input';
-
+import path from 'path';
 import { useState } from 'react';
 
 type InputProjectPathProps = {
@@ -32,7 +32,9 @@ const InputProjectPath: React.FC<InputProjectPathProps> = ({
             placeholder={process.cwd()}
             value={projectPath}
             onChange={setProjectPath}
-            onSubmit={(value) => onSubmit?.(value || process.cwd())}
+            onSubmit={(value) =>
+              onSubmit?.(path.resolve(value || process.cwd()))
+            }
           />
         )}
       </Box>

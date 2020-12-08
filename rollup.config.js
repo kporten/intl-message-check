@@ -1,9 +1,10 @@
 // https://rollupjs.org/guide/en/#configuration-files
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import preserveShebang from 'rollup-plugin-preserve-shebang';
 import resolve from '@rollup/plugin-node-resolve';
-import typescript from '@wessberg/rollup-plugin-ts';
 import subpathExternals from 'rollup-plugin-subpath-externals';
+import typescript from '@wessberg/rollup-plugin-ts';
 
 import pkg from './package.json';
 
@@ -19,6 +20,7 @@ export default {
   plugins: [
     resolve({ extensions }),
     commonjs(),
+    json(),
     typescript({
       transpiler: 'babel',
     }),

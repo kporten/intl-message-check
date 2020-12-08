@@ -28,20 +28,21 @@ const App: React.FC = () => {
         onSelect={(mode) => dispatchForm({ type: 'mode', payload: mode })}
       />
       {form.mode && (
-        <InputFilePath
-          step="2/3"
-          submitted={form.filePath}
-          onSubmit={(filePath) =>
-            dispatchForm({ type: 'filePath', payload: filePath })
-          }
-        />
-      )}
-      {form.mode && form.filePath && (
         <InputProjectPath
-          step="3/3"
+          step="2/3"
           submitted={form.projectPath}
           onSubmit={(projectPath) =>
             dispatchForm({ type: 'projectPath', payload: projectPath })
+          }
+        />
+      )}
+      {form.mode && form.projectPath && (
+        <InputFilePath
+          step="3/3"
+          projectPath={form.projectPath}
+          submitted={form.filePath}
+          onSubmit={(filePath) =>
+            dispatchForm({ type: 'filePath', payload: filePath })
           }
         />
       )}
