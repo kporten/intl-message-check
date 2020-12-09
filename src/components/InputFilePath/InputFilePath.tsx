@@ -3,7 +3,7 @@ import TextInput from 'ink-text-input';
 import path from 'path';
 import { useState } from 'react';
 
-import useAccess from '../hooks/useAccess';
+import useAccess from '../../hooks/useAccess';
 import useAutoDetection from './hooks/useAutoDetection';
 
 type InputFilePathProps = {

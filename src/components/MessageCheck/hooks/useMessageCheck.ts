@@ -45,7 +45,7 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
             readInterface.on('line', (line) => {
               lineCount += 1;
 
-              const id = line.match(/id:.?["'](.*)["']/);
+              const id = line.match(/id:.?["'](.*?)["']/);
               const message = id?.[1];
 
               // * Check if intl message id is not falsy and save the result of the check for this message id

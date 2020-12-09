@@ -6,17 +6,15 @@ const useAccess = (path: string, expectedType?: 'DIRECTORY' | 'FILE') => {
 
   useEffect(() => {
     const check = async () => {
-      if (!path) return;
-
       try {
         const stat = await fs.promises.stat(path);
 
         switch (expectedType) {
           case 'DIRECTORY':
-            if (stat.isDirectory()) setHasAccess(true);
+            setHasAccess(stat.isDirectory());
             break;
           case 'FILE':
-            if (stat.isFile()) setHasAccess(true);
+            setHasAccess(stat.isFile());
             break;
           default:
             setHasAccess(true);
