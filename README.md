@@ -4,6 +4,10 @@ This CLI tool can help you detect missing and unused Format.JS messages (https:/
 
 Run `npx @kporten/intl-message-check` in your JS/TS project folder to check your message definitions.
 
+## Requirements
+
+- Node.js LTS 14.x
+
 ## Example
 
 Your JSON file with intl messages:
