@@ -1,16 +1,21 @@
 ![intl-message-check](./assets/logo.png)
 
-This CLI tool can help you detect missing and unused Format.JS messages (https://formatjs.io/docs/react-intl/api#formatmessage).
+This CLI tool can help you detect missing or unused Format.JS messages (https://formatjs.io/docs/react-intl/api#formatmessage).
 
-Run `npx @kporten/intl-message-check` in your JS/TS project folder to check your message definitions.
+Run `npx @kporten/intl-message-check` in your JavaScript or TypeScript project to check your message definitions.
 
 ## Requirements
 
 - Node.js LTS 14.x
 
-## Example
+## Modes
 
-Your JSON file with intl messages:
+- Find missing -> Messages used in the code but not defined in the definition.
+- Find unused -> Messages not used in the code, but defined in the definition.
+
+## Example to find missing messages
+
+### Your JSON file with intl message definitions
 
 ```json
 {
@@ -20,13 +25,39 @@ Your JSON file with intl messages:
 }
 ```
 
-Usage of formatMessage() in your code:
+### Your JS(X) or TS(X) code with formatMessage()
 
 ```jsx
-<div>{intl.formatMessage({ id: 'menu' })}</div>
+<div>{intl.formatMessage({ id: 'message' })}</div>
 ```
 
-Run this tool to find missing messages:
+or
+
+```jsx
+<div>
+  {condition
+    ? intl.formatMessage({ id: 'message1' })
+    : intl.formatMessage({ id: 'message2' })}
+</div>
+```
+
+or
+
+```jsx
+<div>
+  {intl.formatMessage(
+    condition
+      ? { id: 'message1' }
+      : { id: 'message2' },
+  )}
+</div>
+```
+
+### Run the tool
+
+```sh
+npx @kporten/intl-message-check
+```
 
 ```sh
 [1/3] What kind of messages do you want to find?
@@ -46,9 +77,9 @@ languages.de
 languages.en
 ```
 
-Now you know that you should add the two messages.
+Now you know that you should add the two missing messages to your definition file.
 
-> Note: Currently only static IDs will be supported.
+> Note: Currently only static message IDs will be supported (id property and message string must be in the same line).
 
 ---
 
