@@ -45,17 +45,15 @@ const useMessageCheck = (input: Required<FormReducerState>) => {
             readInterface.on('line', (line) => {
               lineCount += 1;
 
-              const id = line.match(/id:.?["'](.*?)["']/);
-              const message = id?.[1];
+              const ids = [...line.matchAll(/id:\s*?["'](\S+?)["']/g)];
 
-              // * Check if intl message id is not falsy and save the result of the check for this message id
-              if (message) {
-                intlMessages.set(message, {
+              ids.forEach(([, id]) => {
+                intlMessages.set(id, {
                   file: filePath,
                   line: lineCount,
-                  isMissing: !intlMessages.has(message),
+                  isMissing: !intlMessages.has(id),
                 });
-              }
+              });
             });
 
             readInterface.on('close', resolve);
