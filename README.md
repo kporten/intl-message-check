@@ -1,6 +1,6 @@
 ![intl-message-check](./assets/logo.png)
 
-This CLI tool can help you detect missing or unused Format.JS messages (https://formatjs.io/docs/react-intl/api#formatmessage).
+This CLI tool can help you detect missing or unused `react-intl` messages (https://formatjs.io/docs/react-intl/api#formatmessage).
 
 Run `npx @kporten/intl-message-check` in your JavaScript or TypeScript project to check your message definitions.
 
