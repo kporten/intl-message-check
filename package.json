@@ -1,6 +1,6 @@
 {
   "name": "@kporten/intl-message-check",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "license": "MIT",
   "description": "CLI tool to check if messages are unused or missing",
